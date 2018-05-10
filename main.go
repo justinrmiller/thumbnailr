@@ -53,7 +53,7 @@ func main() {
 
 	var files []string
 	err := filepath.Walk(*imagePath, func(path string, info os.FileInfo, err error) error {
-		if path != *imagePath && strings.Contains(path, ".jpg") {
+		if path != *imagePath && strings.Contains(path, ".jpg") && !strings.Contains(path, ".thumb") {
 			files = append(files, path)
 			fmt.Println("Found file: ", path)
 		}
