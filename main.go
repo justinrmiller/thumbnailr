@@ -15,7 +15,7 @@ import (
 	"github.com/nfnt/resize"
 )
 
-func processFile(fileChan <-chan string, size int) {
+func processFile(fileChan <-chan string, size uint) {
 	for file := range fileChan {
 		fmt.Println("Processing image file: ", file)
 
@@ -27,7 +27,7 @@ func processFile(fileChan <-chan string, size int) {
 		} else {
 			originalImage, _, err := image.Decode(fileOpen)
 
-			newImage := resize.Resize(160, 0, originalImage, resize.Lanczos3)
+			newImage := resize.Resize(size, 0, originalImage, resize.Lanczos3)
 
 			outFile, err := os.Create(file + ".thumb")
 			if err != nil {
@@ -41,7 +41,7 @@ func processFile(fileChan <-chan string, size int) {
 
 func main() {
 	imagePath := flag.String("path", "", "Path to image files. (Required)")
-	size := flag.Int("size", 160, "Resize image to this size. (Optional, Default: 160)")
+	size := flag.Uint("size", 160, "Resize image to this size. (Optional, Default: 160)")
 	flag.Parse()
 
 	if *imagePath == "" {
