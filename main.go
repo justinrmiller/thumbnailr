@@ -26,7 +26,7 @@ func processFile(file string, size uint) {
 
 		newImage := resize.Resize(size, 0, originalImage, resize.Lanczos3)
 
-		outFile, err := os.Create(file + ".thumb")
+		outFile, err := os.Create(file + ".thumb.jpg")
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -60,7 +60,7 @@ func main() {
 
 	var files []string
 	err := filepath.Walk(*imagePath, func(path string, info os.FileInfo, err error) error {
-		if path != *imagePath && strings.Contains(path, ".jpg") && !strings.Contains(path, ".thumb") {
+		if path != *imagePath && strings.Contains(path, ".jpg") && !strings.Contains(path, ".thumb.jpg") {
 			files = append(files, path)
 			log.Println("Found file:", path)
 		}
